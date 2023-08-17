@@ -1,0 +1,195 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: Calibri;
+}
+
+a { 
+    text-decoration: none;
+    color: #03a1fc;
+}
+
+.header {
+    padding: 12px 30px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1023;
+    background: #fff;
+}
+
+.header a {
+    color: #222
+}
+
+.header .title {
+    font-size: 30px;
+    font-weight: bolder;
+    position: relative;
+    top: 5px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.header .menu {
+    display: inline-block;
+    padding: 20px;
+}
+
+.header .menu .item {
+    display: inline-block;
+    padding: 0 20px
+}
+
+.header .menu .item a {
+    color: #222
+}
+
+.header .menu .item a:hover {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.clear-head {
+    margin-top: 4em
+}
+
+.jumbotron {
+    height: 680px;
+    background: url('../images/bg-jumbotron.jpg') no-repeat center bottom;
+    background-size: cover;
+    border-bottom: 1px solid #cdd
+}
+
+.container {
+    padding: 0 35px;
+    max-width: 1200px;
+    margin: 0 auto
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-2 {
+    flex: 0 0 calc(8.3333% * 2);
+    width: calc(8.3333% * 2)
+}
+
+.col-3 {
+    flex: 0 0 calc(8.3333% * 3);
+    width: calc(8.3333% * 3)
+}
+
+.col-4 {
+    flex: 0 0 calc(8.3333% * 4);
+    width: calc(8.3333% * 4)
+}
+
+.col-6 {
+    flex: 0 0 calc(8.3333% * 6);
+    width: calc(8.3333% * 6)
+}
+
+.col-8 {
+    flex: 0 0 calc(8.3333% * 8);
+    width: calc(8.3333% * 8)
+}
+
+.col-10 {
+    flex: 0 0 calc(8.3333% * 10);
+    width: calc(8.3333% * 10)
+}
+
+.deskripsi-web {
+    padding: 30px;
+    font-size: 20px;
+
+    margin-bottom: 3em
+}
+
+.deskripsi-web .title {
+    font-size: 30px;
+}
+
+.deskripsi-web p {
+    text-align: justify;
+}
+
+.footer {
+    background: #222;
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    line-height: 30px;
+    margin-top: 5em
+}
+
+.entry-barang {
+    margin: 10em 0
+}
+
+.form-tambah p {
+    margin: 7px 0;
+    padding: 0
+}
+
+.form-tambah input[type=text],
+.form-tambah input[type=number] {
+    display: block;
+    padding: 20px 15px;
+    width: calc(100% - 70px);
+    border: 1px solid #222;
+    border-radius: 12px;
+}
+
+.form-tambah button {
+    width: calc(100% - 40px);
+    padding: 20px 15px;
+    font-size: 20px;
+    text-transform: uppercase;
+    background: #333;
+    color: #fff;
+    border-radius: 12px;
+}
+
+.form-tambah button:hover {
+    cursor: pointer;
+    background: #000
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #222;
+    color: #fff;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.form-tambah table tbody tr:nth-child(even)
+{
+    background-color: #f2f2f2;
+}
+
+.edit-data {
+    cursor: pointer;
+}
+
+.deskripsi-web .content table, 
+.deskripsi-web .content th, 
+.deskripsi-web .content td {
+    border: 0!important
+}

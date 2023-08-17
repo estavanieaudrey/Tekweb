@@ -1,0 +1,187 @@
+<!--c14210148 Estavanie Audrey T-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" 
+        crossorigin="anonymous"
+    >
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-4">
+                <form>
+                    <div class="form-group mb-3">
+                        <label>Aktivitas :</label>
+                        <input type="text" placeholder="Contoh: Kelas TekWeb / Kelas SD" id="act" class="form-control"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Jam Mulai :</label>
+                        <input type="time" id="timeStart" class="form-control"/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Jam Selesai :</label>
+                        <input type="time" id="timeEnd" class="form-control"/>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pilihan" value="kul">
+                        <label class="form-check-label" for="kuliah">
+                        Kuliah
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="pilihan" value="prib">
+                        <label class="form-check-label" for="pribadi">
+                        Pribadi
+                        </label>
+                    </div>
+                    <button class="btn btn-primary">Simpan Jadwal</button>
+                </form>
+            </div>  
+            <div class="col-8">
+                <h1>Agenda Kuliah</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Aktivitas</th>
+                            <th>Jam Mulai : </th>
+                            <th>Jam Selesai : </th>
+                        </tr>
+                    </thead>
+                    <tbody id="agendaKuliah"></tbody>
+                </table>
+                <h1>Agenda Pribadi</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Aktivitas</th>
+                            <th>Jam Mulai : </th>
+                            <th>Jam Selesai : </th>
+                        </tr>
+                    </thead>
+                    <tbody id="agendaPribadi"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" 
+        crossorigin="anonymous">
+    </script>
+    <script>
+        let activities = [];
+        let kuliah = document.querySelector("#agendaKuliah");
+        let pribadi = document.querySelector("#agendaPribadi");
+        // let pilih = document.querySelectorAll("#pilihan").value;
+        
+        console.log(activities)
+        let renderActivities = () => {
+            pribadi.innerHTML = ''
+            kuliah.innerHTML = ''
+            activities.forEach((elm, i) => {
+                if(elm.tipe == 'kul'){
+                    kuliah.innerHTML +=
+                    "<tr>" + 
+                    "<td>"+
+                    "<button onclick= 'hapus("+i
+                    +")' + >X</button>" +
+                    "</td>" + 
+                    "<td>" +
+                    elm.act + 
+                    "</td>" + 
+                    "<td>" +
+                    elm.timeStart + 
+                    "</td>" + 
+                    "<td>" +
+                    elm.timeEnd + 
+                    "</td>"
+                }
+                else if (elm.tipe == 'prib'){
+                    pribadi.innerHTML +=
+                    "<td>"+
+                    "<button onclick= 'hapus("+i
+                    +")' + >X</button>" +
+                    "</td>" + 
+                    "<td>" +
+                    elm.act + 
+                    "</td>" + 
+                    "<td>" +
+                    elm.timeStart + 
+                    "</td>" + 
+                    "<td>" +
+                    elm.timeEnd + 
+                    "</td>"
+                }
+
+            });
+            
+        };
+
+
+        let form = document.querySelector("form");
+        form.addEventListener("submit", (event)=> {
+            event.preventDefault();
+
+            let act, timeStart, timeEnd, tipe;
+            act = document.querySelector("#act").value;
+            timeStart = document.querySelector("#timeStart").value;
+            timeEnd = document.querySelector("#timeEnd").value;
+            tipe = type();
+
+            let found = false;
+            activities.forEach((elm, i) => {
+                if ((elm.timeStart >= timeStart && elm.timeEnd <= timeEnd) || 
+                (elm.timeStart <= timeStart && elm.timeEnd >= timeEnd) && elm.tipe == tipe){
+                    alert("jadwal terisi");
+                    found = true;
+                }
+            })
+
+            if (!found){
+                activities.push({
+                act: act,
+                timeStart: timeStart,
+                timeEnd: timeEnd,
+                tipe: tipe
+                })
+
+                activities.sort((satu, dua) => {
+                    if(satu.timeStart > dua.timeStart)
+                    return 1
+                    if(satu.timeStart < dua.timeStart)
+                    return -1
+
+                    return 0 
+                })
+            }
+            form.reset();
+            renderActivities();
+            return false;
+        })
+
+        function hapus(index) 
+        {
+            activities.splice(index, 1);
+            renderActivities();
+        }
+
+        function type(){
+            let tipe = document.querySelectorAll("#pilihan")
+            for(i = 0 ; i < tipe.length ; i++){
+                if(tipe[i].checked)
+                    return tipe[i].value
+            }
+        
+        }
+    </script>
+  </body>
+</html>

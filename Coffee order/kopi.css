@@ -1,0 +1,54 @@
+.header {
+    padding: 12px 20px;
+    background-color: rgb(72, 157, 185);
+    color: white;
+    text-align: center;
+}
+
+.body {
+    padding: 15px;
+    text-align: center;
+}
+
+.item.active{
+    background-color: rgb(72, 157, 185);
+    color: white;
+}
+
+.menu {
+    padding: 0;
+}
+
+.data {
+    padding: 0;
+}
+
+.data table {
+    max-width: 100%;
+}
+
+.data thead {
+    background-color: white;
+}
+
+.data tr, .data th {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.data th {
+    max-width: 100%;
+}
+
+.data td {
+    border: 1px solid black;
+}
+
+.data tbody {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.data tr:nth-child(even){
+    background-color: lightgray;
+}

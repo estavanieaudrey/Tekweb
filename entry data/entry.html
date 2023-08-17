@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/styles/styles.css">
+</head>
+<body>
+    <div class="header">
+        <a href="./"><h1 class="title">TEST 1 - TEKWEB</h1></a>
+
+        <div class="menu">
+            <div class="item"><a href="index.html">Home</a></div>
+            <div class="item"><a href="entry.html">Entry Data</a></div>
+        </div>
+    </div>
+
+    <div class="clear-head"></div>
+
+    <div class="container">
+        <div class="entry-barang">
+            
+            <h3>Entry Data Barang</h3>
+
+            <div class="form-tambah">
+                <div class="row">
+                    <div class="col-3">
+                        <p>Kode Barang</p>
+                        <input type="text" name="" id="kode-barang"><br/>
+
+                        <p>Nama Barang</p>
+                        <input type="text" name="" id="nama-barang"><br/>
+
+                        <p>Quantity</p>
+                        <input type="number" name="" id="quantity"><br/>
+
+                        <button id="tambah">Add <b>+</b></button>
+                    </div>
+
+                    <div class="col-8">
+                        <table>
+                            <thead>
+                                <tr id="head-tambah">
+                                    <th width="250">Kode</th>
+                                    <th width="250">Nama</th>
+                                    <th width="250">Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hasil-tambah"></tbody>
+
+                        </table>
+
+                        <br/><br/>
+
+                        <div style="max-width: 350px; margin: 0 auto" id="form-edit"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let simpan_data = []
+        let pernah_simpan = false
+
+        document.getElementById('tambah').addEventListener('click', () => tambah_data())
+
+        const tambah_data = () =>
+        {
+            const kode_barang = document.getElementById("kode-barang")
+            const nama_barang = document.getElementById("nama-barang")
+            const quantity = document.getElementById("quantity")
+
+            if (cek_ada(kode_barang.value))
+                alert(`Barang dengan kode ${kode_barang.value} sudah ditambahkan!`)
+            else
+            {
+                simpan_data.push({
+                    kode_barang: kode_barang.value,
+                    nama_barang: nama_barang.value,
+                    quantity: quantity.value
+                });
+
+                document.getElementById("hasil-tambah").innerHTML += `
+                    <tr>
+                        <td><p class="edit-data" onclick="edit('${kode_barang.value}')">${kode_barang.value}</p></td>
+                        <td>${nama_barang.value}</td>
+                        <td>${quantity.value}</td>
+                        <td style="text-align: center"><a href="javascript:void(0)" onclick="hapus('${kode_barang.value}')">[x]</a></td>
+                    </tr>`
+                
+
+                if (simpan_data.length == 1 && !pernah_simpan)
+                    document.getElementById("head-tambah").innerHTML += `<th width="250">Aksi</th>`
+
+
+                kode_barang.value = nama_barang.value = quantity.value = ''
+            }
+        }
+
+
+        const hapus = (kode_barang) =>
+        {
+            let temp = []
+            document.getElementById("hasil-tambah").innerHTML = ''
+
+            simpan_data.forEach(isi_object =>
+            {
+                if (isi_object.kode_barang != kode_barang)
+                {
+                    temp.push({
+                        kode_barang: isi_object.kode_barang,
+                        nama_barang: isi_object.nama_barang,
+                        quantity: isi_object.quantity
+                    })
+
+                    document.getElementById("hasil-tambah").innerHTML += `
+                        <tr>
+                            <td><p class="edit-data" onclick="edit('${isi_object.kode_barang}')">${isi_object.kode_barang}</p></td>
+                            <td>${isi_object.nama_barang}</td>
+                            <td>${isi_object.quantity}</td>
+                            <td style="text-align: center"><a href="javascript:void(0)" onclick="hapus('${isi_object.kode_barang}')">[x]</a></td>
+                        </tr>`
+                }
+            })
+
+            simpan_data = temp
+
+            if  (simpan_data.length == 0)
+            {
+                document.getElementById("head-tambah").innerHTML = `
+                    <th width="250">Kode</th>
+                    <th width="250">Nama</th>
+                    <th width="250">Qty</th>`
+            }
+        }
+
+
+        const edit = (kode_barang) =>
+        {
+            let temp  = {}
+            simpan_data.forEach(isi_object => {
+                if (isi_object.kode_barang == kode_barang)
+                    temp = isi_object
+            })
+
+            // console.log(temp)
+
+            document.getElementById("form-edit").innerHTML = `
+                    <div id="msg-edit">Edit barang dengan kode barang "<b>${temp.kode_barang}</b>" (<a href="javascript:void(0)" onclick="batalkanedit()">batalkan</a>)</div><br/>
+
+                    <p>Kode Barang</p>
+                    <input type="text" id="edit-kode-barang" value="${temp.kode_barang}"><br/>
+
+                    <p>Nama Barang</p>
+                    <input type="text" id="edit-nama-barang" value="${temp.nama_barang}"><br/>
+
+                    <p>Quantity</p>
+                    <input type="text" id="edit-quantity" value="${temp.quantity}"><br/>
+
+                    <button id="simpan" onclick="simpan('${temp.kode_barang}')">Edit</button>
+                </div>`
+        }
+
+
+        const simpan = (kode_barang) =>
+        {
+            const ekode_barang = document.getElementById("edit-kode-barang")
+            const enama_barang = document.getElementById("edit-nama-barang")
+            const equantity = document.getElementById("edit-quantity")
+
+            document.getElementById("hasil-tambah").innerHTML = ''
+            
+
+            simpan_data.forEach(isi_object => 
+            {
+                if (isi_object.kode_barang == kode_barang)
+                {
+                    isi_object.kode_barang = ekode_barang.value
+                    isi_object.nama_barang = enama_barang.value
+                    isi_object.quantity = equantity.value
+                }
+
+
+                document.getElementById("hasil-tambah").innerHTML += `
+                    <tr>
+                        <td><p class="edit-data" onclick="edit('${isi_object.kode_barang}')">${isi_object.kode_barang}</p></td>
+                        <td>${isi_object.nama_barang}</td>
+                        <td>${isi_object.quantity}</td>
+                        <td style="text-align: center"><a href="javascript:void(0)" onclick="hapus('${isi_object.kode_barang}')">[x]</a></td>
+                    </tr>`
+            })
+
+            document.getElementById("form-edit").innerHTML = ''
+        }
+
+
+        const batalkanedit = () =>
+        {
+            document.getElementById("form-edit").innerHTML = ''
+        }
+
+
+        const cek_ada  = (kode_barang) =>
+        {
+            let retn = false
+            simpan_data.forEach(isi_object => {
+                if (isi_object.kode_barang == kode_barang)
+                    retn = true
+            })
+
+            return retn
+        }
+    </script>
+
+
+    <div class="footer">
+        Test 1 - Teknologi Web<br/>
+    </div>
+</body>
+</html>
